@@ -49,10 +49,13 @@ class RedisSpidey extends Spidey {
           continue;
         }
 
-        for (const url of urls)
-          this.request({ url: url as string }, this.parse.bind(this));
+        for (const url of urls) this.makeRequest(url);
       }
     }
+  }
+
+  async makeRequest(data: string) {
+    this.request({ url: data as string }, this.parse.bind(this));
   }
 
   private sleep(ms: number) {
