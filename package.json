@@ -1,6 +1,6 @@
 {
   "name": "spidey-redis",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Spidey with the power of Redis",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -43,7 +43,7 @@
   },
   "dependencies": {
     "redis": "^4.6.6",
-    "spidey": "^1.0.4"
+    "spidey": "^1.0.5"
   },
   "files": [
     "dist",

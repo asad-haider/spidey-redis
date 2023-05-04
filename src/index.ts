@@ -21,6 +21,11 @@ class RedisSpidey extends Spidey {
       continuous: true,
     });
 
+    this.spideyOptions = {
+      ...super.getOptions(),
+      ...this.spideyOptions,
+    };
+
     if (!this.spideyOptions?.redisUrl) {
       throw new Error('Redis url is not defined');
     }
@@ -49,13 +54,17 @@ class RedisSpidey extends Spidey {
           continue;
         }
 
-        for (const url of urls) this.makeRequest(url);
+        for (const url of urls) await this.makeRequest(url);
       }
     }
   }
 
   async makeRequest(data: string) {
-    this.request({ url: data as string }, this.parse.bind(this));
+    await this.request({ url: data as string }, this.parse.bind(this));
+  }
+
+  getOptions() {
+    return this.spideyOptions as RedisSpideyOptions;
   }
 
   private sleep(ms: number) {

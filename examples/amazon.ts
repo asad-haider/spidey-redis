@@ -16,9 +16,6 @@ export class ASINPipeline implements SpideyPipeline {
 class AmazonSpidey extends RedisSpidey {
   constructor() {
     super({
-      concurrency: 50,
-      retries: 5,
-      logLevel: 'debug',
       pipelines: [ASINPipeline, RedisPipeline],
       redisUrl: 'redis://localhost:6379',
       urlsKey: 'amazon:urls',

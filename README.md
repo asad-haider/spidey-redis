@@ -25,6 +25,9 @@ npm install spidey-redis
 ```
 
 ## Options
+
+RedisSpidey supports all Spidey options in addition to the following specific options.
+
 | Configuration | Type | Description | Default | Required |
 | --- | --- | --- | --- | --- |
 | `redisUrl` | `string` | Redis url such as `redis://localhost:6379` | `null` | Yes |
