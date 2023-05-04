@@ -1,45 +1,15 @@
-import { SpideyOptions, SpideyPipeline, Spidey } from 'spidey';
+import { SpideyOptions, Spidey } from 'spidey';
 import { createClient, RedisClientType } from 'redis';
+import { RedisPipeline } from './pipeline';
 
-export interface RedisSpideyOptions extends SpideyOptions {
+interface RedisSpideyOptions extends SpideyOptions {
   redisUrl?: string;
   urlsKey?: string;
   dataKey?: string;
   sleepDelay?: number;
 }
 
-export class RedisPipeline implements SpideyPipeline {
-  client: RedisClientType;
-  dataKey: string;
-
-  constructor(private options?: SpideyOptions) {
-    if (!this.options?.redisUrl) {
-      throw new Error('Redis url is not defined');
-    }
-
-    this.client = createClient({
-      url: this.options?.redisUrl,
-    });
-    this.dataKey = this.options?.dataKey as string;
-  }
-
-  async start() {
-    await this.client.connect();
-  }
-
-  async complete() {
-    await this.client.disconnect();
-  }
-
-  async process(data: any) {
-    await this.client.lPush(this.dataKey, JSON.stringify(data));
-
-    // Return data back for other pipelines
-    return data;
-  }
-}
-
-export class RedisSpidey extends Spidey {
+class RedisSpidey extends Spidey {
   private client: RedisClientType;
   private urlsKey: string;
   private sleepDelay: number;
@@ -104,3 +74,5 @@ export class RedisSpidey extends Spidey {
     return data;
   }
 }
+
+export { RedisSpidey, RedisSpideyOptions, RedisPipeline };
