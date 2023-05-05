@@ -54,13 +54,16 @@ class RedisSpidey extends Spidey {
           continue;
         }
 
-        for (const url of urls) await this.makeRequest(url);
+        urls.forEach(url => this.makeRequest(url));
       }
+
+      await this.sleep(10);
     }
   }
 
-  async makeRequest(data: string) {
-    await this.request({ url: data as string }, this.parse.bind(this));
+  // override this method if you want to manipulate spidey redis request
+  makeRequest(data: string) {
+    this.request({ url: data as string }, this.parse.bind(this));
   }
 
   getOptions() {

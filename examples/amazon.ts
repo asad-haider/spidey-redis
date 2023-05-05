@@ -19,7 +19,7 @@ class AmazonSpidey extends RedisSpidey {
       pipelines: [ASINPipeline, RedisPipeline],
       redisUrl: 'redis://localhost:6379',
       urlsKey: 'amazon:urls',
-      dataKey: 'amazon:data',
+      dataKey: 'amazon:data'
     });
   }
 
@@ -27,6 +27,15 @@ class AmazonSpidey extends RedisSpidey {
     'user-agent':
       'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36',
   };
+
+  // override makeRequest to manipulate spidey redis request 
+  makeRequest(data: string) {
+    const url = data;
+    this.request(
+      { url, headers: this.headers, meta: { url } },
+      this.parse.bind(this)
+    );
+  }
 
   parse(response: SpideyResponse) {
     const url = response.url;
