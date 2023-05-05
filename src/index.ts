@@ -1,6 +1,6 @@
-import { SpideyOptions, Spidey } from 'spidey';
-import { createClient, RedisClientType } from 'redis';
-import { RedisPipeline } from './pipeline';
+import { SpideyOptions, Spidey } from "spidey";
+import { createClient, RedisClientType } from "redis";
+import { RedisPipeline } from "./pipeline";
 
 interface RedisSpideyOptions extends SpideyOptions {
   redisUrl?: string;
@@ -27,7 +27,7 @@ class RedisSpidey extends Spidey {
     };
 
     if (!this.spideyOptions?.redisUrl) {
-      throw new Error('Redis url is not defined');
+      throw new Error("Redis url is not defined");
     }
 
     this.client = createClient({
@@ -38,7 +38,7 @@ class RedisSpidey extends Spidey {
     this.sleepDelay = this.spideyOptions?.sleepDelay ?? 5000;
 
     if (!this.urlsKey) {
-      throw new Error('Url queue is not defined');
+      throw new Error("Url queue is not defined");
     }
   }
 
@@ -54,7 +54,7 @@ class RedisSpidey extends Spidey {
           continue;
         }
 
-        urls.forEach(url => this.makeRequest(url));
+        urls.forEach((url) => this.makeRequest(url));
       }
 
       await this.sleep(10);

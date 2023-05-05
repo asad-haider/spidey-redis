@@ -1,5 +1,5 @@
-import { RedisClientType, createClient } from 'redis';
-import { SpideyOptions, SpideyPipeline } from 'spidey';
+import { RedisClientType, createClient } from "redis";
+import { SpideyOptions, SpideyPipeline } from "spidey";
 
 export class RedisPipeline implements SpideyPipeline {
   client: RedisClientType;
@@ -7,7 +7,7 @@ export class RedisPipeline implements SpideyPipeline {
 
   constructor(private options?: SpideyOptions) {
     if (!this.options?.redisUrl) {
-      throw new Error('Redis url is not defined');
+      throw new Error("Redis url is not defined");
     }
 
     this.client = createClient({
